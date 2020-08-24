@@ -12,8 +12,8 @@ class PaymentType(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
-        verbose_name = ("paymenttype")
-        verbose_name_plural = ("paymenttypes")
+        verbose_name = ("payment type")
+        verbose_name_plural = ("payment types")
 
     def __str__(self):
         return f'{self.merchant_name} {self.account_number}'
