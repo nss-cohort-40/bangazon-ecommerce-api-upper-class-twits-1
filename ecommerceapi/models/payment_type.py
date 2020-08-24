@@ -7,7 +7,7 @@ from .customer import Customer
 class PaymentType(models.Model):
     merchant_name = models.CharField(max_length=50)
     account_number = models.CharField(max_length=50)
-    customer_id = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
     expiration_date = models.IntegerField()
     created_date = models.DateTimeField(auto_now_add=True, blank=True)
 
