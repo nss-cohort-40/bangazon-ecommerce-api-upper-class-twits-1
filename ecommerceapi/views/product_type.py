@@ -34,27 +34,27 @@ class ProductTypeView(ViewSet):
         except Exception as ex:
             return HttpResponseServerError(ex)
 
-    def update(self, request, pk=None):
+    # def update(self, request, pk=None):
         
-        product_type = ProductType.objects.get(pk=pk)
-        product_type.name = request.data["name"]
-        product_type.save()
+    #     product_type = ProductType.objects.get(pk=pk)
+    #     product_type.name = request.data["name"]
+    #     product_type.save()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+    #     return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-    def destroy(self, request, pk=None):
+    # def destroy(self, request, pk=None):
         
-        try:
-            product_type = ProductType.objects.get(pk=pk)
-            product_type.delete()
+    #     try:
+    #         product_type = ProductType.objects.get(pk=pk)
+    #         product_type.delete()
 
-            return Response({}, status=status.HTTP_204_NO_CONTENT)
+    #         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-        except ProductType.DoesNotExist as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+    #     except ProductType.DoesNotExist as ex:
+    #         return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
-        except Exception as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    #     except Exception as ex:
+    #         return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         
     def list(self, request):
