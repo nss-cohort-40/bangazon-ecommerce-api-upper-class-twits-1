@@ -20,11 +20,13 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from ecommerceapi.views import register_user, login_user
-from ecommerceapi.views import ProductTypeView
+from ecommerceapi.views import ProductTypeView, CustomerView, UserView
 
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'producttype', ProductTypeView, 'producttype')
+router.register(r'customer', CustomerView, 'customer')
+router.register(r'users', UserView, 'user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
