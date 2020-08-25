@@ -1,0 +1,1 @@
+insert into auth_user (password, last_login, is_superuser, username, first_name, email, is_staff, is_active, date_joined, last_name) values (1234, "2020-08-10", False, "tanner", "Tanner", "t@t.com", True, True, "2020-08-10", "tanner");
