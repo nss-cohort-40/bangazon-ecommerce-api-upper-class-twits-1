@@ -13,8 +13,7 @@ class Product(models.Model):
     location = models.CharField(max_length=75)
     image_path = models.CharField(max_length=255)
     created_at = models.DateField()
-    product_type = models.ForeignKey(
-        ProductType, on_delete=models.DO_NOTHING)
+    product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING)
 
     class Meta:
         verbose_name = ("product")
