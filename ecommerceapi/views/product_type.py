@@ -10,7 +10,7 @@ class ProductTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ProductType
         url = serializers.HyperlinkedIdentityField(
-            view_name='producttype',
+            view_name='producttype-detail',
             lookup_field='id'
         )
         fields = ('id', 'name', 'url')
@@ -59,8 +59,8 @@ class ProductTypeView(ViewSet):
         
     def list(self, request):
         
-        product_type = ProductType.objects.get(pk=pk)
+        product_type = ProductType.objects.all()
 
-        serializer = ProductType(
+        serializer = ProductTypeSerializer(
             product_type, many=True, context={'request': request})
         return Response(serializer.data)
