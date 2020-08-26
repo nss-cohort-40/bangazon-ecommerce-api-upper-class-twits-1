@@ -23,31 +23,32 @@ class PaymentTypeSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'merchant_name', 'account_number')
 
 
-class ParkAreas(ViewSet):
-    """Park Areas for Kennywood Amusement Park"""
+class PaymentTypeView(ViewSet):
+    """Payment Type for Bangazon"""
 
     def retrieve(self, request, pk=None):
-        """Handle GET requests for single park area
+        """Handle GET requests for single payment type
 
         Returns:
-            Response -- JSON serialized park area instance
+            Response -- JSON serialized payment type instance
         """
         try:
-            area = ParkArea.objects.get(pk=pk)
-            serializer = ParkAreaSerializer(area, context={'request': request})
+            payment_type = PaymentType.objects.get(pk=pk)
+            serializer = PaymentTypeSerializer(
+                payment_type, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
 
     def list(self, request):
-        """Handle GET requests to park areas resource
+        """Handle GET requests to payment types resource
 
         Returns:
-            Response -- JSON serialized list of park areas
+            Response -- JSON serialized list of payment typess
         """
-        areas = ParkArea.objects.all()
-        serializer = ParkAreaSerializer(
-            areas,
+        payment_types = PaymentType.objects.all()
+        serializer = PaymentTypeSerializer(
+            payment_types,
             many=True,
             context={'request': request}
         )
