@@ -20,6 +20,7 @@ class ProductTypeView(ViewSet):
     def create(self, request):
         new_product_type = ProductType()
         new_product_type.name = request.data["name"]
+        new_product_type.save()
 
         serializer = ProductTypeSerializer(new_product_type, context={'request': request})
 
