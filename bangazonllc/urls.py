@@ -15,20 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from ecommerceapi.models import *
 from django.urls import path, include
+from ecommerceapi.models import *
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from ecommerceapi.views import register_user, login_user
-from ecommerceapi.views import ProductTypeView, CustomerView, UserView
+from ecommerceapi.views import ProductTypeView, CustomerView, UserView, Products
 
 
 router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'products', Products, 'product')
 router.register(r'producttype', ProductTypeView, 'producttype')
 router.register(r'customer', CustomerView, 'customer')
 router.register(r'users', UserView, 'user')
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('register/', register_user),
