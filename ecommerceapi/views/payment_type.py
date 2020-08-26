@@ -16,15 +16,27 @@ class PaymentTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PaymentType
         url = serializers.HyperlinkedIdentityField(
-            view_name='payment type',
+            view_name='paymenttype',
             lookup_field='id'
         )
         fields = ('id', 'url', 'merchant_name', 'account_number',
-                  'customer', 'expiration_date', 'created_date')
+                  'customer_id', 'expiration_date')
 
 
 class PaymentTypeView(ViewSet):
     """Payment Type for Bangazon"""
+
+    def create(self, request):
+        new_payment_type = PaymentType()
+        new_payment_type.merchant_name = request.data["merchant_name"]
+        new_payment_type.account_number = request.data["account_number"]
+        new_payment_type.customer_id = request.data["customer_id"]
+        new_payment_type.expiration_date = request.data["expiration_date"]
+
+        serializer = PaymentTypeSerializer(
+            new_payment_type, context={'request': request})
+
+        return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         """Handle GET requests for single payment type
