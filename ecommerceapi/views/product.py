@@ -18,7 +18,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name='product',
             lookup_field='id'
         )
-        fields = ('id', 'title', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'customer_id')
+        fields = ('id', 'title', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'customer_id', 'product_type_id')
 
 class Products(ViewSet):
     """Product for Ecommerce API"""
@@ -31,7 +31,7 @@ class Products(ViewSet):
         """
 
         customer = Customer.objects.get(pk=request.data["customer_id"])
-        product_type = ProductType.objects.get(pk=request.data["producttype"])
+        product_type = ProductType.objects.get(pk=request.data["product_type_id"])
 
         newproduct = Product()
         newproduct.title = request.data["title"]
