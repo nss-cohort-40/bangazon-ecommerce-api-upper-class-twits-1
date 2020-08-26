@@ -8,7 +8,8 @@ class PaymentType(models.Model):
     merchant_name = models.CharField(max_length=50)
     account_number = models.CharField(max_length=50)
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-    expiration_date = models.IntegerField()
+    # expiration_date = models.CharField(max_length=50)
+    expiration_date = models.DateField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
