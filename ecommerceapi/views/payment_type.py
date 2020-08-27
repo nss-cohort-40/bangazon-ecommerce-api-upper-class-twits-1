@@ -67,3 +67,21 @@ class PaymentTypeView(ViewSet):
             context={'request': request}
         )
         return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests for a single payment type
+
+        Returns:
+            Response -- 200, 404, or 500 status code
+        """
+        try:
+            payment_type = PaymentType.objects.get(pk=pk)
+            payment_type.delete()
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        except PaymentType.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
