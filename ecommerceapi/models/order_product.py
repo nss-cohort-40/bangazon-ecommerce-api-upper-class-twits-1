@@ -5,8 +5,10 @@ from .product import Product
 
 class OrderProduct(models.Model):
 
-    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
+    product = models.ForeignKey(
+        Product, on_delete=models.DO_NOTHING, related_name="cart")
+    order = models.ForeignKey(
+        Order, on_delete=models.DO_NOTHING, related_name="cart")
 
     class Meta:
         verbose_name = ("order product")

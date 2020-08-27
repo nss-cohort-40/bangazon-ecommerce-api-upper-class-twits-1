@@ -4,7 +4,9 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from ecommerceapi.models import Product, Customer, ProductType
+from ecommerceapi.models import Product, Customer, ProductType, Order, OrderProduct
+from rest_framework.decorators import action
+
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for product
@@ -18,7 +20,9 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name='product',
             lookup_field='id'
         )
-        fields = ('id', 'title', 'price', 'description', 'quantity', 'location', 'image_path', 'customer_id', 'product_type_id')
+        fields = ('id', 'title', 'price', 'description', 'quantity',
+                  'location', 'image_path', 'customer_id', 'product_type_id')
+
 
 class Products(ViewSet):
     """Product for Ecommerce API"""
@@ -31,7 +35,8 @@ class Products(ViewSet):
         """
 
         customer = Customer.objects.get(pk=request.data["customer_id"])
-        product_type = ProductType.objects.get(pk=request.data["product_type_id"])
+        product_type = ProductType.objects.get(
+            pk=request.data["product_type_id"])
 
         newproduct = Product()
         newproduct.title = request.data["title"]
@@ -46,7 +51,8 @@ class Products(ViewSet):
 
         newproduct.save()
 
-        serializer = ProductSerializer(newproduct, context={'request': request})
+        serializer = ProductSerializer(
+            newproduct, context={'request': request})
 
         return Response(serializer.data)
 
@@ -56,9 +62,10 @@ class Products(ViewSet):
         Returns:
             Response -- JSON serialized product instance
         """
-        try: 
+        try:
             product = Product.objects.get(pk=pk)
-            serializer = ProductSerializer(product, context={'request': request})
+            serializer = ProductSerializer(
+                product, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
@@ -91,7 +98,7 @@ class Products(ViewSet):
 
         except Product.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
-        
+
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -106,3 +113,47 @@ class Products(ViewSet):
         product.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+# Example request:
+#   http://localhost:8000/orders/cart
+
+    @action(methods=['get', 'post'], detail=False)
+    def cart(self, request):
+        if request.method == "GET":
+
+            current_user = Customer.objects.get(user=request.auth.user)
+
+            try:
+                open_order = Order.objects.get(
+                    customer=current_user, payment_type=None)
+                products_on_order = Product.objects.filter(
+                    cart__order=open_order)
+
+            except Order.DoesNotExist as ex:
+                return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+            serializer = ProductSerializer(
+                products_on_order, many=True, context={'request': request})
+            return Response(serializer.data)
+
+        elif request.method == "POST":
+
+            current_user = Customer.objects.get(user=request.auth.user)
+
+            order = None
+
+            try:
+                order = Order.objects.get(
+                    customer=current_user, payment_type=None)
+
+            except Order.DoesNotExist:
+                order = Order.objects.create(customer=current_user)
+
+            product = Product.objects.get(pk=request.data['product_id'])
+
+            new_order_product = OrderProduct.objects.create(
+                order_id=order.id,
+                product_id=product.id
+            )
+
+            return Response({}, status=status.HTTP_201_CREATED)
