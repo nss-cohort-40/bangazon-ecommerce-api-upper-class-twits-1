@@ -34,9 +34,10 @@ class Products(ViewSet):
             Response -- JSON serialized Product instance
         """
 
-        customer = Customer.objects.get(pk=request.data["customer_id"])
+        customer = Customer.objects.get(user=request.auth.user)
+        #gets the customer that matches the token that is sent with the request
         product_type = ProductType.objects.get(
-            pk=request.data["product_type_id"])
+            pk=request.data["productTypeId"])
 
         newproduct = Product()
         newproduct.title = request.data["title"]
@@ -44,7 +45,7 @@ class Products(ViewSet):
         newproduct.description = request.data["description"]
         newproduct.quantity = request.data["quantity"]
         newproduct.location = request.data["location"]
-        newproduct.image_path = request.data["image_path"]
+        # newproduct.image_path = request.data["image_path"]
         # newproduct.created_at = request.data["created_at"]
         newproduct.customer = customer
         newproduct.product_type = product_type
