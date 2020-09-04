@@ -21,7 +21,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         fields = ('id', 'title', 'price', 'description', 'quantity',
-                  'location', 'image_path', 'customer_id', 'customer', 'product_type_id')
+                  'location', 'image_path', 'product_type', 'customer_id', 'customer', 'product_type_id')
         depth = 2
 
 
@@ -36,7 +36,7 @@ class Products(ViewSet):
         """
 
         customer = Customer.objects.get(user=request.auth.user)
-        #gets the customer that matches the token that is sent with the request
+        # gets the customer that matches the token that is sent with the request
         product_type = ProductType.objects.get(
             pk=request.data["productTypeId"])
 
@@ -159,13 +159,14 @@ class Products(ViewSet):
             )
 
             return Response({}, status=status.HTTP_201_CREATED)
-        
+
         elif request.method == "DELETE":
 
             current_user = Customer.objects.get(user=request.auth.user)
-           
+
             try:
-                product_on_order = OrderProduct.objects.get(pk=request.data['orderproduct_id'])
+                product_on_order = OrderProduct.objects.get(
+                    pk=request.data['orderproduct_id'])
                 product_on_order.delete()
                 return Response({}, status=status.HTTP_204_NO_CONTENT)
 
@@ -173,11 +174,3 @@ class Products(ViewSet):
                 return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
             except Exception as ex:
                 return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-                
-
-               
-
-
-
-

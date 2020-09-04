@@ -5,6 +5,7 @@ from rest_framework import serializers
 from rest_framework import status
 from ecommerceapi.models import ProductType
 
+
 class ProductTypeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -15,6 +16,9 @@ class ProductTypeSerializer(serializers.HyperlinkedModelSerializer):
         )
         fields = ('id', 'name', 'url')
 
+    depth = 2
+
+
 class ProductTypeView(ViewSet):
 
     def create(self, request):
@@ -22,7 +26,8 @@ class ProductTypeView(ViewSet):
         new_product_type.name = request.data["name"]
         new_product_type.save()
 
-        serializer = ProductTypeSerializer(new_product_type, context={'request': request})
+        serializer = ProductTypeSerializer(
+            new_product_type, context={'request': request})
 
         return Response(serializer.data)
 
@@ -30,13 +35,14 @@ class ProductTypeView(ViewSet):
 
         try:
             product_type = ProductType.objects.get(pk=pk)
-            serializer = ProductTypeSerializer(product_type, context={'request': request})
+            serializer = ProductTypeSerializer(
+                product_type, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
 
     # def update(self, request, pk=None):
-        
+
     #     product_type = ProductType.objects.get(pk=pk)
     #     product_type.name = request.data["name"]
     #     product_type.save()
@@ -44,7 +50,7 @@ class ProductTypeView(ViewSet):
     #     return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     # def destroy(self, request, pk=None):
-        
+
     #     try:
     #         product_type = ProductType.objects.get(pk=pk)
     #         product_type.delete()
@@ -57,9 +63,8 @@ class ProductTypeView(ViewSet):
     #     except Exception as ex:
     #         return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        
     def list(self, request):
-        
+
         product_type = ProductType.objects.all()
 
         serializer = ProductTypeSerializer(
