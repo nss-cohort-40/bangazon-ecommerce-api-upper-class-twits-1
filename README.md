@@ -25,10 +25,10 @@ Now, set up your virtual environment:
 
 1. `python -m venv bangazonEnv`
 1. Activate virtual environment:
-   **Mac**
-   * `source ./bangazonEnv/bin/activate`
-   **Windows** Maybe need to use Scripts
-   * `source ./bangazonenv/Scripts/activate`
+   * **Mac**
+   	* `source ./bangazonEnv/bin/activate`
+   * **Windows** Maybe need to use Scripts
+   	* `source ./bangazonenv/Scripts/activate`
 1. Install dependencies:
    `pip install -r requirements.txt`
 1. Run migrations:
