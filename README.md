@@ -78,4 +78,17 @@ To **POST**
 
 ```
 
+<img src="./images/POST.png" width="auto" height="auto">
+
 Change it from a **POST** to a **GET** and hit send. Postman should display that customers "cart" with the product you posted above.
+
+<img src="./images/GET_CART.png" width="auto" height="auto">
+
+---
+
+TEAM:
+Adrian Garmendia
+Tanner Brainard
+Michelle McLane
+Even Reynolds
+Leigha Robinson
