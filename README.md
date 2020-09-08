@@ -1,8 +1,13 @@
 <img src="./images/Bangazon.png" width="100" height="100">
+
 # Bangazon Django REST API
+
 ---
-A Team Project Built using Python, Django, and the Django REST Framework that ties to our [client-side application](https://github.com/nss-cohort-40/bangazon-ecommerce-client-upperclasstwits).
+
+A Team Project Built using Python, Django, and the Django REST Framework that ties to our [client-side application](https://github.com/nss-cohort-40/bangazon-ecommerce-client-upperclasstwits)
+
 ##### ERD
+
 <img src="./images/ERD.png" width="500" height="auto">
 
 ---
