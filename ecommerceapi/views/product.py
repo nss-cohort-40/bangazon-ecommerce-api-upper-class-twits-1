@@ -38,7 +38,7 @@ class Products(ViewSet):
         customer = Customer.objects.get(user=request.auth.user)
         # gets the customer that matches the token that is sent with the request
         product_type = ProductType.objects.get(
-            pk=request.data["productTypeId"])
+            pk=request.data["product_type_id"])
 
         newproduct = Product()
         newproduct.title = request.data["title"]
