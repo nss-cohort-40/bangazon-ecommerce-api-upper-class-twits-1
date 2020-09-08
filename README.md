@@ -43,6 +43,7 @@ Now, set up your virtual environment:
 #Testing in Postman
 The database requires an authorization token in **Headers** to succesfully request data. 1. Generate an authorization token by making a **POST** to `/register/`
 <img src="./images/Postman_Register.png" width="auto" height="auto">
+
 Here is a premade value set for customer
 
 ```
@@ -92,8 +93,8 @@ Change it from a **POST** to a **GET** and hit send. Postman should display that
 ---
 
 TEAM:
-Adrian Garmendia
-Tanner Brainard
-Michelle McLane
-Even Reynolds
-Leigha Robinson
+* Adrian Garmendia
+* Tanner Brainard
+* Michelle McLane
+* Even Reynolds
+* Leigha Robinson
