@@ -96,5 +96,5 @@ TEAM:
 * Adrian Garmendia
 * Tanner Brainard
 * Michelle McLane
-* Even Reynolds
+* Evan Reynolds
 * Leigha Robinson
